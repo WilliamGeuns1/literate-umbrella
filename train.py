@@ -8,6 +8,7 @@ from keras import backend as K
 import mlflow.keras
 
 mlflow.keras.autolog()
+mlflow.set_experiment("Test1337")
 
 batch_size = 128
 num_classes = 10
@@ -50,6 +51,7 @@ model.add(Dropout(0.25))
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(num_classes, activation='softmax'))
 
 model.compile(loss=keras.losses.categorical_crossentropy,
