@@ -6,4 +6,4 @@
   * Start the mlflow ui by typing `mlflow ui` 
   * Go to `localhost:5000` to see the ui
 
-Models can be downloaded through the ui
+Model weights can be downloaded through the ui
