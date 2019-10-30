@@ -4,11 +4,12 @@ from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
+from keras.callbacks import ModelCheckpoint
 from keras import backend as K
 import mlflow.keras
 
 mlflow.keras.autolog()
-mlflow.set_experiment("Test1337")
+mlflow.set_experiment("pool2")
 
 batch_size = 128
 num_classes = 10
@@ -58,11 +59,16 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy', 'mae'])
 
+filepath="weights-improvement-{epoch:02d}-{val_accuracy:.2f}.hdf5"
+checkpoint = ModelCheckpoint(filepath,verbose=1, save_best_only=False)
+callbacks_list = [checkpoint]
 model.fit(x_train, y_train,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
+           callbacks=callbacks_list,
           validation_data=(x_test, y_test))
+         
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
